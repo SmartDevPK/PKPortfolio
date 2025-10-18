@@ -101,4 +101,28 @@ git commit -m "docs: add database connection test details"
 git push origin main
 ```
 
+## Database Setup
+The project uses **MySQL** with **PDO** for database connections.  
+
+### Database Setup and Test
+
+1. **Start XAMPP** (Apache + MySQL):
+   ```bash
+2. Open phpMyAdmin:
+http://localhost/phpmyadmin
+
+3. Create a new database
+Use the same name as specified in src/config.php.
+
+4. Import the SQL dump
+Files located in the database/ folder:
+database/portfolio.sql
+
+5. Test the connection using the script:
+
+http://localhost/DevPKPortfolio/src/tests/test.php
+
+6. Expected Output
+Database connection successful!
+
 
