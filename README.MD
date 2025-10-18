@@ -46,3 +46,15 @@ DEVPKPORTFOLIO/
 git clone https://github.com/SmartDevPK/PKPortfolio.git
 cd PKPortfolio
 
+```
+## Database Connection Test
+I have created a `test.php` script to verify the database connection.  
+The script successfully connects to the database and confirms that everything is working correctly.
+
+**Steps to test the connection:**
+
+1. Make sure XAMPP (Apache and MySQL) is running.
+2. Place `test.php` in the `src/tests/` folder.
+3. Open the browser and go to:  
+   `http://localhost/DevPKPortfolio/src/tests/test.php`
+4. You should see: Database connection successful!
