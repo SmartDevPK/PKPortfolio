@@ -58,3 +58,9 @@ The script successfully connects to the database and confirms that everything is
 3. Open the browser and go to:  
    `http://localhost/DevPKPortfolio/src/tests/test.php`
 4. You should see: Database connection successful!
+
+### Import Database
+1. Open phpMyAdmin.
+2. Create a new database with the same name as in `src/config.php`.
+3. Import `database/DevPKPortfolio.sql`.
+4. Test the connection via `http://localhost/DevPKPortfolio/src/tests/test.php`.
