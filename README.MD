@@ -17,7 +17,7 @@ This project demonstrates clean backend logic, organized file structure, and dyn
 ---
 
 ## Project Structure
-project/
+DEVPKPORTFOLIO/
 │
 ├── src/
 │ ├── config/ # Configuration files
