@@ -89,3 +89,14 @@ http://localhost/DevPKPortfolio/src/tests/test.php
 6. Expected Output
 Database connection successful!
 
+## Admin_Login Model
+
+The `Admin_Login` class handles **admin authentication** in the project.
+
+### File Location
+`models/Admin_Login.php`
+
+### Features
+- Checks the email against the constant `ADMIN_EMAIL`.
+- Verifies the password using the hashed value `ADMIN_PASSWORD_HASH`.
+- Returns `true` if the credentials are correct, `false` otherwise.
