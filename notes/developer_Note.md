@@ -125,4 +125,30 @@ http://localhost/DevPKPortfolio/src/tests/test.php
 6. Expected Output
 Database connection successful!
 
+# Developer Notes
+
+## Admin_Login Model
+
+- **Location:** `models/Admin_Login.php`
+- **Purpose:** Handles admin authentication using email and password.
+- **Features:**
+  - Checks email against `ADMIN_EMAIL` constant.
+  - Verifies password using `password_verify` against `ADMIN_PASSWORD_HASH`.
+  - Returns `true` if credentials are correct, `false` otherwise.
+
+  ### Admin_Login Example
+
+```php
+require_once 'models/Admin_Login.php';
+
+$adminLogin = new Admin_Login();
+
+$email = '';
+$password = '';
+
+if ($adminLogin->login($email, $password)) {
+    echo "Login successful!";
+} else {
+    echo "Login failed!";
+}
 
