@@ -1,0 +1,20 @@
+{
+    "name": "pk/dev-pk-portfolio",
+    "description": "Admin login system with config-based credentials",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Pk\\DevPkPortfolio\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MICHAEL EMMANUEL",
+            "email": "emmanuelmichaelpk3@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    }
+}
