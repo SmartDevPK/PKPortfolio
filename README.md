@@ -163,3 +163,30 @@ class AdminService
     }
 }
 ?>
+```
+## 🧪 Testing AdminService
+
+The `AdminServiceTest.php` file contains PHPUnit tests for the `AdminService` class.  
+It verifies both the login functionality and session handling.
+
+### 📄 Test File
+`tests/AdminServiceTest.php`
+
+### ⚙️ Test Coverage
+
+- Ensures `loginAdmin()` returns `true` for valid credentials.
+- Confirms `$_SESSION['admin_logged_in']` is set to `true`.
+- Confirms `$_SESSION['admin_email']` is set correctly.
+
+### 🏃 Run Tests
+
+From your project root, run:
+
+```bash
+php vendor/bin/phpunit tests/AdminServiceTest.php
+ Example Output
+scss
+Copy code
+OK (2 tests, 3 assertions)
+```
+
