@@ -109,9 +109,9 @@ This project uses **Composer** for dependency management.
 
 | File | Commit? | Description |
 |------|----------|--------------|
-| `composer.json` | ✅ **Yes** | Defines project dependencies and autoload configuration. |
-| `composer.lock` | ✅ **Yes** | Locks exact versions of dependencies for consistent installations. |
-| `composer-setup.php` | ❌ **No** | Local setup script, should not be committed. |
+| `composer.json` |  **Yes** | Defines project dependencies and autoload configuration. |
+| `composer.lock` |  **Yes** | Locks exact versions of dependencies for consistent installations. |
+| `composer-setup.php` |  **No** | Local setup script, should not be committed. |
 
 ### 💻 How to Commit Composer Files
 
@@ -121,7 +121,45 @@ If you’ve installed new packages or updated dependencies, commit your Composer
 git add composer.json composer.lock
 git commit -m "chore: add composer.json and lock file for project dependencies"
 git push origin main
+```
 
 vendor/
 composer-setup.php
 .env
+
+## 🧩 AdminService
+
+The `AdminService` class handles administrator authentication and session management.  
+It depends on the `Admin_Login` model to verify credentials and manage login operations
+
+### 📄 File
+`services/AdminService.php`
+```php
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/../models/Admin_Login.php';
+
+class AdminService
+{
+    private Admin_Login $adminLogin;
+
+    public function __construct()
+    {
+        $this->adminLogin = new Admin_Login();
+    }
+
+    public function loginAdmin(string $email, string $password): bool
+    {
+        $success = $this->adminLogin->login($email, $password);
+
+        if ($success) {
+            @session_start();
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_email'] = $email;
+        }
+
+        return $success;
+    }
+}
+?>
