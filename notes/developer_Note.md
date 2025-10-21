@@ -152,3 +152,21 @@ if ($adminLogin->login($email, $password)) {
     echo "Login failed!";
 }
 
+```
+
+## 🧩 Composer Files Commit Guide
+
+###  Files to Commit
+- **composer.json** → Defines dependencies and autoload settings.  
+- **composer.lock** → Locks exact package versions for consistent installations.  
+
+###  Files to Ignore
+- **composer-setup.php** → Local Composer installer; do not commit.  
+
+### 💻 Git Commands for Committing Composer Files
+```bash
+git add composer.json composer.lock
+git commit -m "chore: add composer.json and lock file for project dependencies"
+git push origin main
+
+
