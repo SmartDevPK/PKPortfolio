@@ -168,5 +168,49 @@ if ($adminLogin->login($email, $password)) {
 git add composer.json composer.lock
 git commit -m "chore: add composer.json and lock file for project dependencies"
 git push origin main
+```
 
+
+# 🧠 Developer Notes — AdminService
+
+This document provides technical details, usage examples, and testing guidance for the `AdminService` class.
+
+---
+
+## 📄 File Location
+`services/AdminService.php`
+
+---
+
+## ⚙️ Class Overview
+
+```php
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/../models/Admin_Login.php';
+
+class AdminService
+{
+    private Admin_Login $adminLogin;
+
+    public function __construct()
+    {
+        $this->adminLogin = new Admin_Login();
+    }
+
+    public function loginAdmin(string $email, string $password): bool
+    {
+        $success = $this->adminLogin->login($email, $password);
+
+        if ($success) {
+            @session_start();
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_email'] = $email;
+        }
+
+        return $success;
+    }
+}
+?>
 
