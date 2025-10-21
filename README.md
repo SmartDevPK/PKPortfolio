@@ -100,3 +100,28 @@ The `Admin_Login` class handles **admin authentication** in the project.
 - Checks the email against the constant `ADMIN_EMAIL`.
 - Verifies the password using the hashed value `ADMIN_PASSWORD_HASH`.
 - Returns `true` if the credentials are correct, `false` otherwise.
+
+## 🎵 Composer Files Management
+
+This project uses **Composer** for dependency management.
+
+### 📁 Files to Commit
+
+| File | Commit? | Description |
+|------|----------|--------------|
+| `composer.json` | ✅ **Yes** | Defines project dependencies and autoload configuration. |
+| `composer.lock` | ✅ **Yes** | Locks exact versions of dependencies for consistent installations. |
+| `composer-setup.php` | ❌ **No** | Local setup script, should not be committed. |
+
+### 💻 How to Commit Composer Files
+
+If you’ve installed new packages or updated dependencies, commit your Composer files as follows:
+
+```bash
+git add composer.json composer.lock
+git commit -m "chore: add composer.json and lock file for project dependencies"
+git push origin main
+
+vendor/
+composer-setup.php
+.env
