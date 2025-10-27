@@ -286,3 +286,32 @@ From your project root, run:
 
 php vendor/bin/phpunit src/tests/AdminControllerTest.php
 
+### Ignore the img folder
+
+### Add the following line to your .gitignore to ignore all images:
+
+public/img/
+
+### Remove previously tracked img/ folder
+
+### If you had already added it to Git before ignoring, remove it from tracking:
+
+git rm -r --cached public/img/
+git commit -m "Stop tracking img folder"
+
+Track other public assets
+
+### Make sure CSS, JS, fonts, and index.php are tracked:
+
+git add public/css public/js public/fonts public/index.php
+git commit -m "Add CSS, JS, fonts, and index.php"
+
+### Notes on empty folders
+
+Git does not track empty folders. If you want to keep a folder structure, add a placeholder file like .gitkeep:
+
+### touch public/css/.gitkeep
+
+### Check status
+
+Always verify which files are staged:
