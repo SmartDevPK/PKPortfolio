@@ -1,3 +1,5 @@
 src/config.php
 /vendor/
 composer-setup.php
+
+public/img/
