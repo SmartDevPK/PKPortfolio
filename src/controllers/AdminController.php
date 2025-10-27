@@ -1,40 +1,40 @@
 <?php
-// To correct kind of datab being handled
 declare(strict_types=1);
 
-//Import from services/AdminService.php
 require_once __DIR__ . '/../services/AdminService.php';
 
-// Controller for admin-related actions
 class AdminController
 {
-    // Service instance for admin operations
     private AdminService $adminService;
-    // Constructor to initialize the service
+
     public function __construct()
     {
-        // Create an instance of AdminService
         $this->adminService = new AdminService();
     }
 
-    // show the admin login page
- public function showLoginForm(): void
-{
-  require __DIR__ . '/../../public/admin_login.php';
+    public function showLoginForm(): void
+    {
+        require __DIR__ . '/../../public/admin_login.php';
+    }
+
+    public function logOut(): void
+    {
+        // Only start session if it’s not already started
+        if (session_status() === PHP_SESSION_NONE) {
+            @session_start();
+        }
+
+        // Clear all session data
+        $_SESSION = [];
+        session_unset();
+        // session_destroy();
+
+        // Redirect safely
+        if (!headers_sent()) {
+            header('Location: /admin_login.php');
+            exit;
+        } else {
+            echo '<script>window.location.href="/admin_login.php";</script>';
+        }
+    }
 }
-
-// handle admin login
-   public function  logOut(): void
-   {
-    // Destroy the session to log out the admin
-    session_start();
-    session_unset();
-    session_destroy();
-
-    // Redirect to the login page after logout
-    header('Location: /admin_login.php');
-   }
-
-}
-
-?>
