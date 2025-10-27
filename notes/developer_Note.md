@@ -257,4 +257,33 @@ php vendor/bin/phpunit tests/AdminServiceTest.php
 - Run command:
   ```bash
   vendor/bin/phpunit src/tests/AdminControllerTest.php
+  ```
+ ### 🧪 AdminController Unit Tests
+
+The AdminControllerTest.php file contains PHPUnit tests for the AdminController class.
+These tests verify that the controller correctly loads the login view and handles session logout.
+
+### 📄 File Location
+
+### src/tests/AdminControllerTest.php
+
+### ⚙️ Test Coverage
+
+testShowLoginFormLoadsView()
+Ensures that the admin login view renders and contains the welcome message.
+
+testLogOutDestroysSessionAndRedirects()
+Confirms that session variables (admin_logged_in, admin_email) are cleared after logout.
+
+### 🧰 Setup and Cleanup
+
+Uses setUp() to initialize the controller and manage output buffering.
+
+Uses tearDown() to clean up output buffers and session data after each test.
+
+### 🏃 Running the Tests
+
+From your project root, run:
+
+php vendor/bin/phpunit src/tests/AdminControllerTest.php
 
