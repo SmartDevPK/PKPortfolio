@@ -151,8 +151,10 @@
                                 <li ><a data-scroll class="nav-link active" href="#home">Home <span class="sr-only">(current)</span></a></li>
                                 <li><a data-scroll class="nav-link" href="#about">About</a></li>
                                 <li><a data-scroll class="nav-link" href="#services">Services</a></li>
-                                <li><a data-scroll class="nav-link" href="#project-section" ">Works</a></li>
+                                <li><a data-scroll class="nav-link" href="#project-section">Works</a></li>
                                 <li><a data-scroll class="nav-link" href="#contact">Contact</a></li>
+                                <li><a data-scroll class="nav-link" href="login.php">Admin</a></li>
+
                             </ul>
                        </div>
                     </div>
