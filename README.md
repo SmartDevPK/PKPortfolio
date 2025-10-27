@@ -190,3 +190,30 @@ Copy code
 OK (2 tests, 3 assertions)
 ```
 
+---
+
+## 🗒️ Step 4 — Add README.md Section
+da
+
+In your **README.md**, you can add a shorter, public-friendly version:
+
+```markdown
+## Admin Controller
+
+Handles admin login and logout functions.
+
+**Features:**
+- Shows the admin login page
+- Logs out the admin securely
+
+**Files:**
+- `src/controllers/AdminController.php`
+- `public/admin_login.php`
+
+**Run Test:**
+```bash
+vendor/bin/phpunit src/tests/AdminControllerTest.php
+
+```
+
+
