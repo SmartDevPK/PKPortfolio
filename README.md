@@ -268,3 +268,7 @@ touch public/css/.gitkeep
 
 Always verify which files are staged:
 
+## Login System (`login.php`)
+
+This file handles user authentication and session management.
+
