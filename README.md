@@ -215,5 +215,27 @@ Handles admin login and logout functions.
 vendor/bin/phpunit src/tests/AdminControllerTest.php
 
 ```
+## Testing
+
+This project includes **PHPUnit tests** for the Admin module.  
+The tests ensure that the `AdminController` behaves correctly for login and logout functionality.
+
+### Running Tests
+
+1. Ensure you have PHPUnit installed via Composer:
+
+```bash
+composer require --dev phpunit/phpunit
+Run the tests:
+
+bash
+```
+### Copy code
+vendor/bin/phpunit tests/AdminControllerTest.php
+You should see output confirming that the login view loads and logout clears the session correctly.
+
+### Note: The test uses output buffering to capture view content and manages sessions to avoid conflicts during testing.
+
+---
 
 
