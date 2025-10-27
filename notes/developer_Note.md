@@ -236,3 +236,25 @@ From your project root, run:
 ```bash
 php vendor/bin/phpunit tests/AdminServiceTest.php
 ```
+### AdminController Overview
+
+- **Location:** `src/controllers/AdminController.php`
+- **Purpose:** Manages admin-related actions such as login display and logout.
+- **Strict Types:** Enabled via `declare(strict_types=1)` for better type safety.
+- **Dependencies:** Uses `AdminService` for admin logic.
+
+#### Methods
+
+- `showLoginForm()`
+  - Loads the admin login view from `public/admin_login.php`.
+
+- `logout()`
+  - Destroys the session and redirects to `/admin/login`.
+
+#### Testing
+- Tested with PHPUnit.
+- Test file: `src/tests/AdminControllerTest.php`
+- Run command:
+  ```bash
+  vendor/bin/phpunit src/tests/AdminControllerTest.php
+
