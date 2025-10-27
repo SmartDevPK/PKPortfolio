@@ -315,3 +315,7 @@ Git does not track empty folders. If you want to keep a folder structure, add a 
 ### Check status
 
 Always verify which files are staged:
+
+## login.php
+
+Purpose: Handles user login and session management.
