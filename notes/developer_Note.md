@@ -170,7 +170,6 @@ git commit -m "chore: add composer.json and lock file for project dependencies"
 git push origin main
 ```
 
-
 # 🧠 Developer Notes — AdminService
 
 This document provides technical details, usage examples, and testing guidance for the `AdminService` class.
