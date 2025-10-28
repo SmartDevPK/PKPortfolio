@@ -24,10 +24,10 @@ class Database
         $dsn = "mysql:host={$this->host};dbname={$this->dbname};charset={$this->charset}";
 
         $options = [
-            PDO::ATTR_PERSISTENT => true,                     // Reuse connections for performance
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,      // Throw exceptions for easier debugging
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Always fetch associative arrays
-            PDO::ATTR_EMULATE_PREPARES => false,              // Use real prepared statements
+            PDO::ATTR_PERSISTENT => true,                     
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,     
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, 
+            PDO::ATTR_EMULATE_PREPARES => false,             
         ];
 
         try {
@@ -36,7 +36,7 @@ class Database
             // Store the error for later retrieval and show minimal info to users
             $this->error = $e->getMessage();
             error_log("Database Connection Error: " . $this->error); // Log securely
-            echo "⚠️ Unable to connect to the database. Please contact the administrator.";
+            echo " Unable to connect to the database. Please contact the administrator.";
         }
     }
 
