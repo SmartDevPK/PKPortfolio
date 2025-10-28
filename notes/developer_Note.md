@@ -319,3 +319,14 @@ Always verify which files are staged:
 ## login.php
 
 Purpose: Handles user login and session management.
+
+### Handling Large File Modifications
+
+When `git status` shows many modified files:
+
+#### 1. To commit all changes at once
+```bash
+git add .
+git commit -m "Update all project files"
+git push origin main
+```
