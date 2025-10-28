@@ -153,7 +153,7 @@
                                 <li><a data-scroll class="nav-link" href="#services">Services</a></li>
                                 <li><a data-scroll class="nav-link" href="#project-section">Works</a></li>
                                 <li><a data-scroll class="nav-link" href="#contact">Contact</a></li>
-                                <li><a data-scroll class="nav-link" href="login.php">Admin</a></li>
+                                <li><a data-scroll class="nav-link"  href="login.php"><span style="color:red">Admin</span></a></li>
 
                             </ul>
                        </div>
