@@ -1,34 +1,20 @@
 <?php
 declare(strict_types=1);
 
-//Import from models/Admin_Login.php
-require_once __DIR__ . '/../models/Admin_Login.php';
+require_once __DIR__ . '/../models/Admin.php';
 
 class AdminService
 {
-    private Admin_Login $adminLogin;
+    private Admin $adminModel;
 
     public function __construct()
-
-    
     {
-        $this->adminLogin = new Admin_Login();
+        $this->adminModel = new Admin();
     }
 
-    public function loginAdmin(string $email, string $password):bool
+    public function verifyCredentials(string $email, string $password): bool
     {
-        $success = $this->adminLogin->login($email, $password);
-
-        if($success){
-        // Business logic: start session store user info, log attempt
-        @session_start();
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_email'] = $email;
-        }
-
-        return $success;
+        return $this->adminModel->verifyLogin($email, $password);
     }
 }
-
-
 ?>

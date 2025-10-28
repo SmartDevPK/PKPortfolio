@@ -12,29 +12,34 @@ class AdminController
         $this->adminService = new AdminService();
     }
 
-    public function showLoginForm(): void
+    public function login(string $email, string $password): bool
     {
-        require __DIR__ . '/../../public/admin_login.php';
+        if ($this->adminService->verifyCredentials($email, $password)) {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_email'] = $email;
+
+            //  Redirect to dashboard after successful login
+            header('Location: dashboard.php');
+            exit;
+        }
+
+        // Login failed
+        return false;
     }
 
-    public function logOut(): void
+    public function logout(): void
     {
-        // Only start session if it’s not already started
         if (session_status() === PHP_SESSION_NONE) {
-            @session_start();
+            session_start();
         }
 
-        // Clear all session data
-        $_SESSION = [];
         session_unset();
-        // session_destroy();
-
-        // Redirect safely
-        if (!headers_sent()) {
-            header('Location: /admin_login.php');
-            exit;
-        } else {
-            echo '<script>window.location.href="/admin_login.php";</script>';
-        }
+        session_destroy();
+        header('Location: login.php');
+        exit;
     }
 }

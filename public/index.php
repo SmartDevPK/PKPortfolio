@@ -358,7 +358,7 @@
           <h2>let's work together projects <br> just send me email here</h2>
         </div>
         <div class="contact-form">
-          <form action="https://html.dynamiclayers.net/it/alison/contact.php" method="post" id="ajax_form" class="form-horizontal">
+          <form action="api/messages_create.php" method="post" id="ajax_form" class="form-horizontal">
             <div class="form-group colum-row row">
               <div class="col-sm-6">
                 <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
