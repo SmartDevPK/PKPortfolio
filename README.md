@@ -272,3 +272,16 @@ Always verify which files are staged:
 
 This file handles user authentication and session management.
 
+## 🧭 Git Workflow Guide
+
+This section describes the recommended Git commands and practices for maintaining this project cleanly and consistently.
+
+### 1. Checking Current Changes
+Before committing or reverting:
+```bash
+git status
+git add .
+git commit -m "Update: synchronized backend controllers and frontend assets for improved application structure"
+git push origin main
+```
+
