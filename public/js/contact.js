@@ -1,49 +1,40 @@
 $(function() {
-    // Get the form.
-    var form = $('#ajax_form');
+  var form = $('#ajax_form');
+  var formMessages = $('#form-messages');
 
-    // Get the messages div.
-    var formMessages = $('#form-messages');
+  function validateEmail(v){ return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(v); }
 
-    // Set up an event listener for the contact form.
-	$(form).submit(function(event) {
-		// Stop the browser from submitting the form.
-		event.preventDefault();
+  $(form).on('submit', function(event) {
+    event.preventDefault();
 
-		// Serialize the form data.
-		var formData = $(form).serialize();
-		// Submit the form using AJAX.
-		$.ajax({
-			type: 'POST',
-			url: $(form).attr('action'),
-			data: formData
-		})
-		.done(function(response) {
-			// Make sure that the formMessages div has the 'success' class.
-			$(formMessages).removeClass('alert-danger');
-			$(formMessages).addClass('alert-success');
+    var name = $('#name').val().trim();
+    var email = $('#email').val().trim();
+    var message = $('#message').val().trim();
 
-			// Set the message text.
-			$(formMessages).text(response);
+    $(formMessages).removeClass('alert-success alert-danger');
 
-			// Clear the form.
-			$('#name').val('');
-			$('#email').val('');
-			$('#message').val('');
-		})
-		.fail(function(data) {
-			// Make sure that the formMessages div has the 'error' class.
-			$(formMessages).removeClass('alert-success');
-			$(formMessages).addClass('alert-danger');
+    if (!name || !email || !message) {
+      $(formMessages).addClass('alert-danger').text('Please fill name, email, and message.');
+      return;
+    }
+    if (!validateEmail(email)) {
+      $(formMessages).addClass('alert-danger').text('Please enter a valid email.');
+      return;
+    }
 
-			// Set the message text.
-			if (data.responseText !== '') {
-				$(formMessages).text(data.responseText);
-			} else {
-				$(formMessages).text('Oops! An error occured and your message could not be sent.');
-			}
-		});
-		
-	});
-	
+    try {
+      var existing = [];
+      try { existing = JSON.parse(localStorage.getItem('customers')) || []; } catch(e) { existing = []; }
+      var item = { id: (crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now())), name: name, email: email, message: message, createdAt: Date.now() };
+      existing.unshift(item);
+      localStorage.setItem('customers', JSON.stringify(existing));
+
+      $(formMessages).addClass('alert-success').text('Thank you! Your message has been received.');
+      $('#name').val('');
+      $('#email').val('');
+      $('#message').val('');
+    } catch (e) {
+      $(formMessages).addClass('alert-danger').text('Oops! Could not save your message locally.');
+    }
+  });
 });
