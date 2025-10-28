@@ -152,6 +152,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .footer-links a:hover {
             text-decoration: underline;
         }
+        /* Enhancements */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(120deg, #f1f5f9, #e2e8f0, #fef3f2);
+            background-size: 200% 200%;
+            animation: bg-move 12s ease-in-out infinite;
+        }
+        @keyframes bg-move {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .login-container {
+            position: relative; overflow: hidden;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 20px 40px rgba(2,6,23,0.08);
+            transform: translateY(8px);
+            animation: rise-in .6s ease forwards;
+        }
+        @keyframes rise-in { to { transform: translateY(0); } }
+        .login-container::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            background: radial-gradient(300px 160px at 20% -10%, #ad312820 0%, transparent 70%),
+                        radial-gradient(260px 140px at 110% 10%, #2c3e5018 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .input-wrap { position: relative; }
+        .input-wrap input {
+            padding-left: 40px;
+        }
+        .input-icon {
+            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+            color: #94a3b8; font-size: 14px;
+        }
+        .toggle-password {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: transparent; border: 0; color: #64748b; cursor: pointer; padding: 4px;
+        }
+        .error-text { color: #dc2626; font-size: 12px; margin-top: 6px; display: none; }
+        .form-control.error { border-color: #ef4444; background-color: #fff5f5; }
+        .btn[disabled] { opacity: .7; cursor: not-allowed; }
+        .btn-primary { transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 6px 16px rgba(173,49,40,0.2); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(173,49,40,0.28); }
+        .remember {
+          display:flex; align-items:center; gap:8px; font-size: 14px; color: #475569;
+        }
+        .error-banner {
+          background: #fee2e2; color:#991b1b; border:1px solid #fecaca; padding:10px 12px; border-radius:8px; margin:-8px 0 12px; font-size:14px;
+        }
     </style>
 </head>
 
@@ -163,36 +216,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>Admin Login</p>
         </div>
      <?php if (!empty($error)): ?>
-        <div class="error"><?= htmlspecialchars($error) ?></div>
+        <div class="error-banner"><i class="fa-solid fa-triangle-exclamation"></i> <?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
         <form id="adminLoginForm" method="POST" action="">
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input
-                    type="email"
-                    name="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="Enter your email"
-                    required
-                >
+                <div class="input-wrap">
+                    <span class="input-icon"><i class="fa-solid fa-envelope"></i></span>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        id="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+                    <button type="button" class="toggle-password" style="display:none"></button>
+                </div>
+                <div id="emailError" class="error-text">Please enter a valid email address.</div>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    id="password"
-                    placeholder="Enter your password"
-                    required
-                >
+                <div class="input-wrap">
+                    <span class="input-icon"><i class="fa-solid fa-lock"></i></span>
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        id="password"
+                        placeholder="Your password"
+                        required
+                        minlength="6"
+                    >
+                    <button type="button" id="togglePwd" class="toggle-password" aria-label="Show password">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+                <div id="passwordError" class="error-text">Password must be at least 6 characters.</div>
+            </div>
+
+            <div class="form-group" style="margin-top:-4px;">
+                <label class="remember"><input type="checkbox" id="rememberMe"> Remember me</label>
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">
+                <button id="loginBtn" type="submit" class="btn btn-primary">
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
             </div>
@@ -204,5 +274,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
     </div>
+<script>
+  (function(){
+    const form = document.getElementById('adminLoginForm');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const loginBtn = document.getElementById('loginBtn');
+    const togglePwd = document.getElementById('togglePwd');
+    const rememberMe = document.getElementById('rememberMe');
+
+    function isEmail(v){ return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(v); }
+
+    togglePwd.addEventListener('click', function(){
+      const isText = password.getAttribute('type') === 'text';
+      password.setAttribute('type', isText ? 'password' : 'text');
+      this.innerHTML = isText ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+    });
+
+    function showError(input, el, message){
+      input.classList.add('error');
+      el.textContent = message; el.style.display = 'block';
+    }
+    function clearError(input, el){ input.classList.remove('error'); el.style.display = 'none'; }
+
+    email.addEventListener('input', () => {
+      if (!email.value.trim() || !isEmail(email.value.trim())) showError(email, emailError, 'Please enter a valid email address.');
+      else clearError(email, emailError);
+    });
+    password.addEventListener('input', () => {
+      if (password.value.length < 6) showError(password, passwordError, 'Password must be at least 6 characters.');
+      else clearError(password, passwordError);
+    });
+
+    // Prefill from localStorage
+    try {
+      const saved = localStorage.getItem('admin_login_email');
+      if (saved) { email.value = saved; rememberMe.checked = true; }
+    } catch {}
+
+    form.addEventListener('submit', function(e){
+      let valid = true;
+      if (!email.value.trim() || !isEmail(email.value.trim())) { showError(email, emailError, 'Please enter a valid email address.'); valid = false; }
+      if (password.value.length < 6) { showError(password, passwordError, 'Password must be at least 6 characters.'); valid = false; }
+      if (!valid) { e.preventDefault(); return; }
+      try {
+        if (rememberMe.checked) localStorage.setItem('admin_login_email', email.value.trim());
+        else localStorage.removeItem('admin_login_email');
+      } catch {}
+      loginBtn.setAttribute('disabled', 'true');
+    });
+  })();
+</script>
 </body>
 </html>
