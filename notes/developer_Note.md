@@ -330,3 +330,46 @@ git add .
 git commit -m "Update all project files"
 git push origin main
 ```
+# Developer Notes: Project Class
+
+## Overview
+
+This `Project` class is part of the portfolio project.  
+It demonstrates **basic PHP OOP principles**, encapsulation, and data conversion for APIs or frontend consumption.
+
+---
+
+## Features
+
+- **Private properties**: Ensures data encapsulation.
+- **Constructor (`__construct`)**: Initializes project properties.
+- **Getters**: Access project data safely.
+- **`toArray()` method**: Converts object data to an **associative array**, useful for JSON responses.
+- **PHPUnit tests**: Validates object creation, getters, and `toArray()` functionality.
+
+---
+
+## Class Structure
+
+```php
+class Project
+{
+    private string $name;
+    private string $description;
+    private string $heading;
+
+    public function __construct(string $name, string $description, string $heading) { ... }
+
+    public function getName(): string { ... }
+    public function getDescription(): string { ... }
+    public function getHeading(): string { ... }
+
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'heading' => $this->heading,
+        ];
+    }
+}
