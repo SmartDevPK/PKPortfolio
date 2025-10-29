@@ -373,3 +373,38 @@ class Project
         ];
     }
 }
+```
+## PHPUnit Tests for Project Class
+
+The `ProjectTest.php` file contains unit tests for the `Project` class using **PHPUnit**.
+
+### Tested Features
+
+1. **Project properties**
+    - Verifies that the constructor correctly sets the `name`, `description`, and `heading` properties.
+    - Ensures that getters return the correct values.
+
+2. **Associative() method**
+
+## Verifies that `toArray()` returns an **associative array** with the expected keys and values.
+    How to Run Tests
+
+### Install PHPUnit via Composer (if not installed):
+
+composer require --dev phpunit/phpunit
+
+
+### From the project root, run:
+
+vendor/bin/phpunit tests/ProjectTest.php
+
+
+### Successful output example:
+
+PHPUnit 9.6.x by Sebastian Bergmann and contributors.
+
+..                                                                  2 / 2 (100%)
+
+Time: 00:00.010, Memory: 4.00 MB
+
+OK (2 tests, 4 assertions)
