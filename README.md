@@ -301,6 +301,36 @@ The `Project` class models a portfolio project with the following features:
 - **PHPUnit tests**: Validate that the class behaves as expected
 
 ---
+## Running Tests
 
+The `Project` class comes with **unit tests** using PHPUnit to ensure it works correctly.
+
+### How to Run
+
+1. Install PHPUnit via Composer (if not installed):
+
+```bash
+ composer require --dev phpunit/phpunit
+Run the tests from the project root:
+```
+
+### bash
+
+vendor/bin/phpunit tests/ProjectTest.php
+### What is Tested
+Project properties: Verifies that getName(), getDescription(), and getHeading() return the correct values.
+
+### Associative() method: Ensures it returns an associative array with the expected keys and values.
+
+### Example Output
+
+PHPUnit 9.6.x by Sebastian Bergmann and contributors.
+
+..                                                                  2 / 2 (100%)
+
+Time: 00:00.010, Memory: 4.00 MB
+
+OK (2 tests, 4 assertions)
+###  This demonstrates that the Project class is functioning correctly and that the tests pass.
 
 
