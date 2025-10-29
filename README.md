@@ -284,4 +284,23 @@ git add .
 git commit -m "Update: synchronized backend controllers and frontend assets for improved application structure"
 git push origin main
 ```
+# DevPK Portfolio
+
+This repository contains a PHP portfolio project demonstrating **object-oriented programming**, data handling, and unit testing with PHPUnit.
+
+---
+
+## Project Class Overview
+
+The `Project` class models a portfolio project with the following features:
+
+- **Private properties**: `name`, `description`, `heading`
+- **Constructor**: Initializes project properties
+- **Getters**: Access individual properties safely
+- **`toArray()` method**: Converts object data to an **associative array**
+- **PHPUnit tests**: Validate that the class behaves as expected
+
+---
+
+
 
