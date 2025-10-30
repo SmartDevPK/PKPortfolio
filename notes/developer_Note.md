@@ -427,3 +427,8 @@ $projectService = new ProjectService();
 $project = new Project('Project Name', 'Description', 'Heading');
 $projectService->addProject($project);
 ```
+## Add PHPUnit test for ProjectService and update developer notes
+
+- Implement ProjectServiceTest to verify addProject() inserts projects correctly
+- testAddProjectInsertsSuccessfully() asserts successful insertion into Portfolio table
+- Update developer_Note.md with usage instructions and method details for ProjectService
