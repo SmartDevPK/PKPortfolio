@@ -333,4 +333,19 @@ Time: 00:00.010, Memory: 4.00 MB
 OK (2 tests, 4 assertions)
 ###  This demonstrates that the Project class is functioning correctly and that the tests pass.
 
+## ProjectService
+
+The `ProjectService` class manages projects in the database.
+
+### Features
+- Add new projects to the `Portfolio` table
+- Uses PDO and prepared statements to prevent SQL injection
+- Returns a boolean to indicate success
+
+### Usage
+```php
+require_once __DIR__ . '/../models/Project.php';
+require_once __DIR__ . '/../service/ProjectService.php';';
+```
+
 
