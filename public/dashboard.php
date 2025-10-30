@@ -4,45 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-  <style>
-    :root { --bg:#0f172a; --card:#111827; --muted:#1f2937; --text:#e5e7eb; --sub:#9ca3af; --brand:#22c55e; --brand-2:#2563eb; --danger:#ef4444; }
-    * { box-sizing: border-box; }
-    html,body { height:100%; }
-    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji"; background: linear-gradient(180deg, #0b1220, #0a0f1a); color: var(--text); }
-    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
-    .header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; }
-    .title { font-size: 22px; font-weight: 700; letter-spacing:.2px; }
-    .tabs { display:flex; gap:8px; background: rgba(255,255,255,.04); padding:6px; border-radius:10px; }
-    .tab { border:0; background:transparent; color:var(--sub); padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:600; }
-    .tab.active { background: var(--brand-2); color:white; }
-    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
-    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
-    .card { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:18px; }
-    .card h2 { margin:0 0 12px; font-size:18px; }
-    .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-    @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
-    label { font-size: 12px; color: var(--sub); display:block; margin-bottom:6px; font-weight:600; }
-    input[type="text"], input[type="email"], textarea { width:100%; background:#0b1220; color:var(--text); border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:10px 12px; outline:none; }
-    textarea { min-height:110px; resize: vertical; }
-    input[type="file"] { width:100%; color:var(--sub); }
-    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .btn { border:0; border-radius:10px; padding:10px 14px; font-weight:700; cursor:pointer; color:white; }
-    .btn.primary { background: linear-gradient(90deg, var(--brand-2), #7c3aed); }
-    .btn.success { background: linear-gradient(90deg, var(--brand), #10b981); }
-    .btn.muted { background: #1f2937; color:#d1d5db; }
-    .btn.danger { background: #ef4444; }
-    .list { display:grid; gap:12px; margin-top:12px; max-height: 380px; overflow:auto; padding-right:4px; }
-    .item { display:grid; grid-template-columns: 64px 1fr auto; align-items:center; gap:12px; background:#0b1220; border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:10px; }
-    .thumb { width:64px; height:64px; border-radius:10px; background:#111827; object-fit:cover; border:1px solid rgba(255,255,255,.08) }
-    .meta { display:flex; flex-direction:column; gap:2px; }
-    .meta .name { font-weight:700; }
-    .meta .sub { color: var(--sub); font-size:12px; }
-    .empty { color: var(--sub); font-size:14px; padding:12px; border:1px dashed rgba(255,255,255,.18); border-radius:10px; text-align:center; }
-    .toolbar { display:flex; gap:8px; justify-content:flex-end; margin-top:8px; }
-    .pill { padding:6px 10px; border-radius:999px; background:#0b1220; border:1px solid rgba(255,255,255,.1); color: var(--sub); font-size:12px; }
-    .kbd { background:#111827; border:1px solid rgba(255,255,255,.1); padding:2px 6px; border-radius:6px; font-size:12px; color:#d1d5db }
-    .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
-  </style>
+  <link rel="stylesheet" href="style.css">
+ 
   <meta name="robots" content="noindex, nofollow">
   <link rel="shortcut icon" href="data:image/x-icon;,">
 </head>
