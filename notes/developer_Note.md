@@ -408,3 +408,22 @@ PHPUnit 9.6.x by Sebastian Bergmann and contributors.
 Time: 00:00.010, Memory: 4.00 MB
 
 OK (2 tests, 4 assertions)
+
+## ProjectService Class
+
+**File:** `services/ProjectService.php`  
+**Purpose:** Manage projects in the database.
+
+### Added:
+- `ProjectService` class
+- `addProject(Project $project): bool` method
+  - Inserts a new project into the `Portfolio` table
+  - Uses prepared statements to prevent SQL injection
+  - Returns a boolean indicating success
+
+### Usage:
+```php
+$projectService = new ProjectService();
+$project = new Project('Project Name', 'Description', 'Heading');
+$projectService->addProject($project);
+```
