@@ -432,3 +432,46 @@ $projectService->addProject($project);
 - Implement ProjectServiceTest to verify addProject() inserts projects correctly
 - testAddProjectInsertsSuccessfully() asserts successful insertion into Portfolio table
 - Update developer_Note.md with usage instructions and method details for ProjectService
+
+### ProjectController Overview
+
+The ProjectController handles incoming HTTP requests related to project operations. It interacts with the ProjectService to perform database transactions.
+
+### Purpose
+
+To manage request flow between the user interface and backend services
+
+To validate incoming data
+
+To handle user actions like adding a project
+
+Methods
+addProject()
+
+Handles POST requests to add new projects into the system.
+
+Flow:
+
+Check request method
+
+Retrieve and sanitize input data
+
+Create a Project object
+
+Pass project data to ProjectService
+
+Output result or error message
+
+### Expected Data Fields
+
+name: Project name
+
+description: Project description
+
+heading: Project heading
+
+### Dependencies
+
+ProjectService.php
+
+Project.php
