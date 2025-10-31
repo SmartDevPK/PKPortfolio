@@ -347,5 +347,28 @@ The `ProjectService` class manages projects in the database.
 require_once __DIR__ . '/../models/Project.php';
 require_once __DIR__ . '/../service/ProjectService.php';';
 ```
+## 🧪 Running Tests
+
+This project uses **PHPUnit** for testing.  
+The `ProjectControllerTest` ensures that the `addProject` controller method behaves correctly for both success and failure scenarios.
+
+### Test Coverage Includes:
+- Mocking `ProjectService` to avoid real DB operations
+- Verifying successful project creation flow
+- Handling failure cases with expected output
+- Using output buffering to avoid accidental echo interference
+- Reflection technique to inject mocked service into the controller
+
+### Run Tests
+
+Install dependencies:
+```bash
+composer install
+Execute the tests:
+
+bash
+Copy code
+vendor/bin/phpunit
+```
 
 
