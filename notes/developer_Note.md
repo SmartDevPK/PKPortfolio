@@ -475,3 +475,16 @@ heading: Project heading
 ProjectService.php
 
 Project.php
+
+###  Added PHPUnit Test for ProjectController
+
+- Implemented `ProjectControllerTest` to validate `addProject` behavior.
+- Added test cases for:
+  - Successful project creation with mocked `ProjectService`
+  - Failed project creation and output assertion
+- Used mock objects to isolate controller logic from database layer.
+- Ensured clean output handling using `ob_start()` and `ob_end_clean()`.
+- Reflection applied to inject mock service due to private property access.
+
+**Purpose:**  
+To ensure controller logic behaves correctly and errors are handled gracefully when inserting project data.
