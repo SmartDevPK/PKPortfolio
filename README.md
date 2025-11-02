@@ -370,5 +370,10 @@ bash
 Copy code
 vendor/bin/phpunit
 ```
+### Admin Dashboard Features  
+- Project CRUD (create, read, update, delete)  
+- Image preview before upload  
+- Data import/export  
+- Customer data management  
 
 
