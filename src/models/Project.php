@@ -6,19 +6,21 @@ declare(strict_types=1);
 class Project
 {
     // Project properties
+    private ?int $id;
     private string $name;
     private string $description;
     private string $heading;
 
     // Constructor to initialize project properties
-    public function __construct(string $name, string $description, string $heading)
-    {
+    public function __construct(?int $id,string $name, string $description, string $heading)
+    {    $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->heading = $heading;
     }
 
     // Getters for project properties
+    public function getId() { return $this->id; }
     public function getName(): string
     {
         return $this->name;
