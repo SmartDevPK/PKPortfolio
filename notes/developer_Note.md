@@ -488,3 +488,56 @@ Project.php
 
 **Purpose:**  
 To ensure controller logic behaves correctly and errors are handled gracefully when inserting project data.
+
+# Developer Notes
+
+## Git Basics
+
+* `modified: public/dashboard.php` means the file has changes not committed yet.
+* To keep changes:
+
+  ```bash
+  git add public/dashboard.php
+  git commit -m "Update dashboard"
+  ```
+* To discard changes:
+
+  ```bash
+  git checkout -- public/dashboard.php
+  ```
+* To see changes:
+
+  ```bash
+  git diff public/dashboard.php
+  ```
+
+## Admin Dashboard Explanation
+
+This admin dashboard provides a simple UI to manage projects and customer messages. It uses tabs to switch between the Projects panel and the Customers panel.
+
+### Key Functions
+
+* **Add Project Form**: Submit project data and image to the backend.
+* **Live Image Preview**: Uses FileReader to preview selected project image before upload.
+* **Load Projects from Database**: Fetches project list from `get_projects.php` and displays them.
+* **Delete Projects**: Allows deleting individual projects and refreshing the list.
+* **Export / Import Projects (JSON)**: Download all projects as a JSON backup or upload JSON to restore.
+* **Clear All Projects**: Sends request to backend to delete all records.
+* **Customer Messages (LocalStorage)**: Renders, stores, and deletes customer messages locally.
+
+### Core Concepts Used
+
+* DOM manipulation + event listeners
+* Fetch API for GET/POST requests
+* FileReader for client-side image preview
+* JSON import/export using Blob
+* LocalStorage for temporary data persistence
+* Basic confirmation dialogs for destructive actions
+
+### Future Improvements
+
+* Add authentication before accessing admin
+* Move customer messages to a database
+* Replace alerts with toast notifications
+* Add input validation and security filters on backend
+* Improve UI/UX for better admin experience
