@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css">
- 
   <meta name="robots" content="noindex, nofollow">
   <link rel="shortcut icon" href="data:image/x-icon;,">
 </head>
@@ -19,43 +18,51 @@
       </div>
     </div>
 
+    <!-- Projects Panel -->
     <section data-panel="projects">
       <div class="grid">
+
+        <!-- Add Project -->
         <div class="card">
           <h2>Add Project</h2>
-          <div class="row">
-            <div>
-              <label for="projHeading">Heading</label>
-              <input id="projHeading" type="text" placeholder="e.g. Featured Work">
-            </div>
-            <div>
-              <label for="projName">Project Name</label>
-              <input id="projName" type="text" placeholder="e.g. Portfolio Website">
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label for="projImage">Project Image</label>
-              <input id="projImage" type="file" accept="image/*">
-            </div>
-            <div>
-              <label for="projPreview">Preview</label>
-              <div class="row" style="grid-template-columns: 96px 1fr; align-items:center;">
-                <img id="projPreview" class="thumb" alt="preview">
-                <span class="pill">Max ~1MB recommended</span>
+          <form action="add_project.php" method="POST" enctype="multipart/form-data" id="projectForm">
+            <div class="row">
+              <div>
+                <label for="projHeading">Heading</label>
+                <input id="projHeading" name="heading" type="text" required>
+              </div>
+              <div>
+                <label for="projName">Project Name</label>
+                <input id="projName" name="name" type="text" required>
               </div>
             </div>
-          </div>
-          <div>
-            <label for="projDesc">Description</label>
-            <textarea id="projDesc" placeholder="Write a short description..."></textarea>
-          </div>
-          <div class="actions">
-            <button id="saveProject" class="btn primary">Save Project</button>
-            <button id="resetProject" class="btn muted">Reset</button>
-            <span class="pill">Ctrl/⌘ + Enter to save</span>
-          </div>
+
+            <div class="row">
+              <div>
+                <label for="projImage">Project Image</label>
+                <input id="projImage" name="image" type="file" accept="image/*">
+              </div>
+              <div>
+                <label>Preview</label>
+                <div class="row" style="grid-template-columns: 96px 1fr; align-items:center;">
+                  <img id="projPreview" class="thumb" alt="preview">
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="projDesc">Description</label>
+              <textarea id="projDesc" name="description" required></textarea>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="btn primary">Save Project</button>
+              <button type="reset" id="resetProject" class="btn muted">Reset</button>
+            </div>
+          </form>
         </div>
+
+        <!-- Project List -->
         <div class="card">
           <h2>Projects</h2>
           <div class="toolbar">
@@ -66,9 +73,11 @@
           </div>
           <div id="projectsList" class="list"></div>
         </div>
+
       </div>
     </section>
 
+    <!-- Customers Panel -->
     <section data-panel="customers" style="display:none;">
       <div class="grid">
         <div class="card">
@@ -83,177 +92,141 @@
     </section>
   </div>
 
-  <script>
-    const $ = (q) => document.querySelector(q);
-    const $$ = (q) => Array.from(document.querySelectorAll(q));
-    const store = {
-      get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
-      set(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+<script>
+/* ===== Helpers ===== */
+const $  = q => document.querySelector(q);
+const $$ = q => [...document.querySelectorAll(q)];
+
+/* ===== Tabs ===== */
+$$('.tab').forEach(t =>
+  t.addEventListener('click', () => {
+    $$('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const tab = t.dataset.tab;
+    $$('section[data-panel]').forEach(p =>
+      p.style.display = p.dataset.panel === tab ? 'block' : 'none'
+    );
+  })
+);
+
+/* ===== Customer Store (localStorage) ===== */
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
+  set(k, v) { localStorage.setItem(k, JSON.stringify(v)) }
+};
+
+function renderCustomers(){
+  const list = $('#customersList');
+  const items = store.get('customers', []);
+  list.innerHTML = items.length ? '' : `<div class="empty">No messages yet</div>`;
+
+  items.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'item';
+    el.innerHTML = `
+      <div class="meta"><strong>${c.name}</strong> (${c.email})<br>${c.message}</div>
+      <button class="btn danger" data-id="${c.id}">Delete</button>
+    `;
+    el.querySelector('button').onclick = () => {
+      store.set('customers', items.filter(x => x.id !== c.id));
+      renderCustomers();
     };
+    list.appendChild(el);
+  });
+}
+renderCustomers();
 
-    const tabs = $$('.tab');
-    const panels = $$('section[data-panel]');
-    tabs.forEach(t => t.addEventListener('click', () => {
-      tabs.forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
-      const name = t.getAttribute('data-tab');
-      panels.forEach(p => p.style.display = p.getAttribute('data-panel') === name ? 'block' : 'none');
-    }));
+/* ===== Project Image Preview ===== */
+$('#projImage').onchange = e => {
+  const f = e.target.files?.[0];
+  if(!f) return $('#projPreview').src = '';
+  const r = new FileReader();
+  r.onload = () => $('#projPreview').src = r.result;
+  r.readAsDataURL(f);
+};
 
-    const projHeading = $('#projHeading');
-    const projName = $('#projName');
-    const projImage = $('#projImage');
-    const projPreview = $('#projPreview');
-    const projDesc = $('#projDesc');
-    const projectsList = $('#projectsList');
+/* ===== Load Projects from DB ===== */
+async function loadProjects() {
+  try {
+    const res = await fetch("get_projects.php"); 
+    const result = await res.json();
+    const data = result.data;  // ✅ fix
 
-    const customersList = $('#customersList');
+    const list = document.querySelector('#projectsList');
 
-    let imageData = '';
-    projImage.addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) { imageData = ''; projPreview.src = ''; return; }
-      const reader = new FileReader();
-      reader.onload = () => { imageData = reader.result; projPreview.src = imageData; };
-      reader.readAsDataURL(file);
-    });
-
-    function renderProjects() {
-      const items = store.get('projects', []);
-      projectsList.innerHTML = '';
-      if (!items.length) { projectsList.innerHTML = `<div class="empty">No projects yet</div>`; return; }
-      items.forEach(p => {
-        const el = document.createElement('div');
-        el.className = 'item';
-        el.innerHTML = `
-          <img src="${p.image || ''}" alt="img" class="thumb">
-          <div class="meta">
-            <div class="name">${p.heading || ''} — ${p.name || ''}</div>
-            <div class="sub">${p.description || ''}</div>
-          </div>
-          <div class="actions">
-            <button class="btn danger" data-id="${p.id}">Delete</button>
-          </div>
-        `;
-        el.querySelector('button').addEventListener('click', () => {
-          const all = store.get('projects', []);
-          store.set('projects', all.filter(x => x.id !== p.id));
-          renderProjects();
-        });
-        projectsList.appendChild(el);
-      });
+    if (!data || data.length === 0) {
+      list.innerHTML = `<div class="empty">No projects yet</div>`;
+      return;
     }
 
-    function renderCustomers() {
-      const items = store.get('customers', []);
-      customersList.innerHTML = '';
-      if (!items.length) { customersList.innerHTML = `<div class="empty">No messages yet</div>`; return; }
-      items.forEach(c => {
-        const el = document.createElement('div');
-        el.className = 'item';
-        el.innerHTML = `
-          <div style="width:64px; height:64px; display:flex; align-items:center; justify-content:center; background:#111827; border-radius:10px; border:1px solid rgba(255,255,255,.08)">
-            <span class="kbd">${(c.name || '?').slice(0,1).toUpperCase()}</span>
-          </div>
-          <div class="meta">
-            <div class="name">${c.name || ''} <span class="sub">${c.email || ''}</span></div>
-            <div class="sub">${c.message || ''}</div>
-          </div>
-          <div class="actions">
-            <button class="btn danger" data-id="${c.id}">Delete</button>
-          </div>
-        `;
-        el.querySelector('button').addEventListener('click', () => {
-          const all = store.get('customers', []);
-          store.set('customers', all.filter(x => x.id !== c.id));
-          renderCustomers();
-        });
-        customersList.appendChild(el);
-      });
+    list.innerHTML = '';
+    data.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'item';
+      el.innerHTML = `
+        <img src="${p.image || ''}" class="thumb">
+        <div class="meta"><strong>${p.heading}</strong> — ${p.name}<br>${p.description}</div>
+        <button class="btn danger" data-id="${p.id}">Delete</button>
+      `;
+
+      el.querySelector('button').onclick = async () => {
+        if(!confirm("Delete this project?")) return;
+        await fetch("delete_project.php?id=" + p.id);
+        loadProjects();
+      };
+
+      list.appendChild(el);
+    });
+
+  } catch (e) {
+    document.querySelector('#projectsList').innerHTML = `<div class="empty">Failed to load projects</div>`;
+    console.log(e);
+  }
+}
+
+
+/* ===== Export ===== */
+$('#exportProjects').onclick = async () => {
+  const res = await fetch("get_projects.php");
+  const data = await res.json();
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "projects_backup.json";
+  a.click();
+};
+
+/* ===== Import ===== */
+$('#importProjects').onclick = () => $('#importProjectsFile').click();
+$('#importProjectsFile').onchange = async e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const json = JSON.parse(await file.text());
+  await fetch("import_projects.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(json)});
+  alert("Imported!");
+  loadProjects();
+};
+
+/* ===== Clear All ===== */
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.getElementById("clearProjects").addEventListener("click", async () => {
+    if (!confirm("Are you sure you want to delete ALL projects?")) return;
+
+    const res = await fetch("clear_projects.php", { method: "POST" });
+    const data = await res.json();
+
+    if (data.status === "success") {
+      alert("All projects cleared!");
+      loadProjects();
+    } else {
+      alert("Error clearing projects");
     }
+  });
 
-    function validateEmail(v){ return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(v); }
+  loadProjects();
+});
 
-    $('#saveProject').addEventListener('click', () => {
-      const heading = projHeading.value.trim();
-      const name = projName.value.trim();
-      const description = projDesc.value.trim();
-      if (!heading || !name || !description) { alert('Please fill heading, name, and description'); return; }
-      const all = store.get('projects', []);
-      const item = { id: crypto.randomUUID(), heading, name, description, image: imageData, createdAt: Date.now() };
-      all.unshift(item);
-      store.set('projects', all);
-      renderProjects();
-      projHeading.value = '';
-      projName.value = '';
-      projDesc.value = '';
-      projImage.value = '';
-      projPreview.src = '';
-      imageData = '';
-    });
-
-    $('#resetProject').addEventListener('click', () => {
-      projHeading.value = '';
-      projName.value = '';
-      projDesc.value = '';
-      projImage.value = '';
-      projPreview.src = '';
-      imageData = '';
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-        if ($('.tab.active')?.getAttribute('data-tab') === 'projects') $('#saveProject').click();
-      }
-    });
-
-    $('#exportProjects').addEventListener('click', () => {
-      const data = store.get('projects', []);
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'projects.json'; a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    $('#importProjects').addEventListener('click', () => $('#importProjectsFile').click());
-    $('#importProjectsFile').addEventListener('change', async (e) => {
-      const f = e.target.files && e.target.files[0];
-      if (!f) return;
-      const text = await f.text();
-      try {
-        const json = JSON.parse(text);
-        if (!Array.isArray(json)) throw new Error('Invalid JSON');
-        store.set('projects', json);
-        renderProjects();
-      } catch { alert('Invalid projects JSON'); }
-      e.target.value = '';
-    });
-
-    $('#clearProjects').addEventListener('click', () => {
-      if (confirm('Clear all projects?')) { store.set('projects', []); renderProjects(); }
-    });
-
-
-
-    $('#exportCustomers').addEventListener('click', () => {
-      const rows = store.get('customers', []);
-      const header = ['name','email','message'];
-      const csv = [header.join(',')].concat(rows.map(r => [r.name, r.email, r.message].map(v => '"' + String(v).replaceAll('"','""') + '"').join(','))).join('\n');
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'customers.csv'; a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    $('#clearCustomers').addEventListener('click', () => {
-      if (confirm('Clear all customers?')) { store.set('customers', []); renderCustomers(); }
-    });
-
-    renderProjects();
-    renderCustomers();
-  </script>
+</script>
 </body>
 </html>
-
