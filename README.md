@@ -376,4 +376,8 @@ vendor/bin/phpunit
 - Data import/export  
 - Customer data management  
 
-
+### Add API reference table for:
+- add_project.php
+- clear_projects.php
+- delete_project.php
+- get_projects.php
